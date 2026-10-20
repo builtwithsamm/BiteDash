@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Menu - BiteDash</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <a href="index.html" class="logo">BiteDash 🍕</a>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="menu.html">Menu</a>
+      <a href="cart.html">Cart <span id="cart-count" class="cart-badge">0</span></a>
+      <div id="user-nav" style="display:inline-flex; gap:15px;"></div>
+    </nav>
+  </header>
+
+  <div class="container">
+    <h2>Our Delicious Menu</h2>
+    <div id="all-foods" class="food-grid"></div>
+  </div>
+
+  <script src="script.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => renderFoods('all-foods'));
+  </script>
+</body>
+</html>

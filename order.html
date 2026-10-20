@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Order Receipt - BiteDash</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <a href="index.html" class="logo">BiteDash 🍕</a>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="menu.html">Menu</a>
+      <a href="cart.html">Cart <span id="cart-count" class="cart-badge">0</span></a>
+      <div id="user-nav" style="display:inline-flex; gap:15px;"></div>
+    </nav>
+  </header>
+
+  <div class="container">
+    <div class="receipt-box" id="receipt">
+      <h2 style="text-align:center; color: var(--primary);">BiteDash Receipt</h2>
+      <p style="text-align:center; font-size:14px; color:#555;">Thank you for ordering!</p>
+      <hr style="margin: 15px 0;">
+      <p><strong>Order ID:</strong> <span id="order-id">-</span></p>
+      <p><strong>Status:</strong> <span id="order-status" style="color:green; font-weight:bold;">Order Placed</span></p>
+      <p><strong>Address:</strong> <span id="order-address">-</span></p>
+      <p><strong>Phone:</strong> <span id="order-phone">-</span></p>
+      <p><strong>Payment Method:</strong> <span id="order-payment">-</span></p>
+      <hr style="margin: 15px 0;">
+      <h4>Ordered Items:</h4>
+      <ul id="order-items" style="list-style:none; padding: 10px 0;"></ul>
+      <hr style="margin: 15px 0;">
+      <p style="font-size: 18px; display:flex; justify-content:space-between;">
+        <strong>Total Paid:</strong> <strong id="order-total" style="color:var(--primary);">₹0</strong>
+      </p>
+      <br>
+      <button class="btn no-print" style="width:100%;" onclick="window.print()">Print Receipt 🖨️</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const order = JSON.parse(sessionStorage.getItem('latest_order'));
+      if (!order) {
+        document.getElementById('receipt').innerHTML = '<h3>No order found.</h3><a href="menu.html">Order Now</a>';
+        return;
+      }
+
+      document.getElementById('order-id').innerText = order._id;
+      document.getElementById('order-status').innerText = order.status;
+      document.getElementById('order-address').innerText = order.deliveryAddress;
+      document.getElementById('order-phone').innerText = order.phone;
+      document.getElementById('order-payment').innerText = order.paymentMethod;
+      document.getElementById('order-total').innerText = '₹' + order.totalAmount;
+
+      const itemsList = document.getElementById('order-items');
+      itemsList.innerHTML = order.items.map(i => `
+        <li style="display:flex; justify-content:space-between; margin-bottom:5px;">
+          <span>${i.name} x ${i.qty}</span>
+          <span>₹${i.price * i.qty}</span>
+        </li>
+      `).join('');
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BiteDash - Fresh Food Delivered</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <a href="index.html" class="logo">BiteDash 🍕</a>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="menu.html">Menu</a>
+      <a href="cart.html">Cart <span id="cart-count" class="cart-badge">0</span></a>
+      <div id="user-nav" style="display:inline-flex; gap:15px;"></div>
+    </nav>
+  </header>
+
+  <div class="container">
+    <section class="hero">
+  <h1>Delicious Food Delivered Fast</h1>
+  <p>Order your favorite meals directly to your doorstep with BiteDash.</p>
+  <br>
+  <a href="menu.html" class="btn btn-secondary">Explore Full Menu</a>
+</section>
+    <h2>Featured Dishes</h2>
+    <div id="featured-foods" class="food-grid"></div>
+  </div>
+
+  <script src="script.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => renderFoods('featured-foods', 3));
+  </script>
+</body>
+</html>

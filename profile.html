@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Profile - BiteDash</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <a href="index.html" class="logo">BiteDash 🍕</a>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="menu.html">Menu</a>
+      <a href="cart.html">Cart <span id="cart-count" class="cart-badge">0</span></a>
+      <div id="user-nav" style="display:inline-flex; gap:15px;"></div>
+    </nav>
+  </header>
+
+  <div class="container">
+    <h2>My Account & Past Orders</h2>
+    <br>
+    <div id="past-orders">Loading orders...</div>
+  </div>
+
+  <script src="script.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      try {
+        const res = await fetch('/api/orders/my-orders');
+        const data = await res.json();
+        const container = document.getElementById('past-orders');
+
+        if (!data.success || data.orders.length === 0) {
+          container.innerHTML = '<p>No past orders found.</p>';
+          return;
+        }
+
+        container.innerHTML = data.orders.map(order => `
+          <div style="background:white; padding:15px; margin-bottom:15px; border-radius:var(--radius); border:1px solid var(--border-color);">
+            <p><strong>Order ID:</strong> ${order._id}</p>
+            <p><strong>Date:</strong> ${new Date(order.createdAt).toLocaleDateString()}</p>
+            <p><strong>Total Amount:</strong> ₹${order.totalAmount}</p>
+            <p><strong>Status:</strong> <span style="color:green;">${order.status}</span></p>
+          </div>
+        `).join('');
+      } catch (err) {
+        console.error(err);
+      }
+    });
+  </script>
+</body>
+</html>
